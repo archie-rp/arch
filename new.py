@@ -92,16 +92,20 @@ while ans:
 		if rsp == "1":
 			db.create()
 		elif rsp == "2":
-			db.read()
+			#op=input("Read From : \n 0:Apps \n 1:Themes \n 2:Fonts ")
+			db.read("fonts")
 		elif rsp == "3":
-			#apps=input("Apps para inserir:thunar vlc ... ")
-			db.insert(apps)
+			print("0")
+			tp=input("\n Add From \n 0:Apps \n 1:Themes \n 2:Fonts \n Type:")
+			apps=input("Name Packages: (package1 package2 etc)")
+			db.insert(apps, tp)
 		elif rsp == "4":
+			tp=input("\n Remove From \n 0:Apps \n 1:Themes \n 2:Fonts \n Type:")
 			apps=input("Applicacoes a remover:")
-			db.remove(apps)
+			db.remove(apps, tp)
 		elif rsp == "5":
-			apps=input("Applicacoes a instalar:")
-			db.instalar()
+			tp=input("\n Install From \n 0:Apps \n 1:Themes \n 2:Fonts \n 3:Manual Install \n 4:Install All (Apps,Themes and Fonts) \n Applicacoes a instalar:")
+			db.instalar(tp)
 		else:
 			pass
 		input("Done!")

@@ -172,29 +172,31 @@ class database():
 
 	def create(self):
 		#connection = sqlite3.connect("example.db")
-		connection = sqlite3.connect("db.db")
+		connection = sqlite3.connect("teste1.db")
 		c = connection.cursor()
 		#c.execute('create table Persons (id int, name text, city text)')
-		c.execute('create table Applications (id integer primary key, name blob, service int, name_service text)')
+		c.execute('create table apps (id integer primary key, name blob, service int, name_service text)')
+		c.execute('create table themes (id integer primary key, name text)')
+		c.execute('create table fonts (id integer primary key, name text)')
 		#c.execute('insert into Persons VALUES (1, "smith", "dallas")')
-		c.execute('insert into Applications (name) VALUES ("nano")')
-		c.execute('insert into Applications (name) VALUES ("vim")')
+		#c.execute('insert into apps (name) VALUES ("nano")')
+		#c.execute('insert into Applications (name) VALUES ("vim")')
 		connection.commit()
 		connection.close()
 
-	def read(self):
-		conn = sqlite3.connect('db.db')
+	def read(self, tp):
+		conn = sqlite3.connect('teste1.db')
 		c = conn.cursor()
-		app=c.execute("DELETE FROM Applications WHERE name IS NULL OR trim(name) = ''")
-		x = c.execute("select name from Applications")
+		#app=c.execute("DELETE FROM apps WHERE name IS NULL OR trim(name) = ''")
+		x = c.execute('select name from '+ tp)
 		apps= ''
 		for row in x:
 			apps+=row[0] + ' '
 
 		#print ("apps:", apps)
 		#data= x.fetchall()
-		print('apps:', x)
 		data=apps.split(' ')
+		print('apps:', apps)
 		#data='  '.join(apps).split()
 		#data=filter(None, data)
 		#data = filter(lambda x: len(x)>0, data)
@@ -220,40 +222,79 @@ class database():
 		#instalar(apps, 'pacman')
 		return apps
 
-	def insert(self, p):
+	def insert(self, apps, tp):
 			#connection = sqlite3.connect("example.db")
-			connection = sqlite3.connect("db.db")
+			connection = sqlite3.connect("teste1.db")
 			c = connection.cursor()
 			#c.execute('create table Persons (id int, name text, city text)')
 			#c.execute('create table Applications (id integer primary key, name blob, service int, name_service text)')
 			#c.execute('insert into Persons VALUES (1, "smith", "dallas")')
-			p=input("APPS a inserir:")
-			c.execute('insert into Applications (name) VALUES ("' + p + '")')
-			connection.commit()
-			connection.close()
-
-	def remove(self, p):
-			#connection = sqlite3.connect("example.db")
-			connection = sqlite3.connect("db.db")
-			c = connection.cursor()
-			#c.execute('create table Persons (id int, name text, city text)')
-			#c.execute('create table Applications (id integer primary key, name blob, service int, name_service text)')
-			#c.execute('insert into Persons VALUES (1, "smith", "dallas")')
-			print ("APPS a remover:", p)
-			#c.execute('delete from Applications (name) where name=', p )
-			c.execute("DELETE FROM Applications WHERE name=?", (p,))
-			connection.commit()
-			connection.close()
-
-	def instalar(self):
-			apps=database.read("apps")
-			print("sudo pacman -Syu --noconfirm ", apps)
+			#apps=("mpd mpc alsa-utils alsa-plugins xorg-server xorg-xinit xorg-server-utils xorg-twm xorg-xdpyinfo xorg-xdriinfo xorg-xev xorg-xgamma xorg-xinput xorg-xkbcomp xorg-xkbevd xorg-xkbutils xorg-xkill xorg-xlsatoms xorg-xlsclients xorg-xmessage xorg-xmodmap xorg-xpr xorg-xprop xorg-xsetroot xorg-xvinfo xorg-xrandr xorg-xrdb xorg-xrefresh xorg-xset xorg-xwd xorg-xwininfo xorg-xwud xterm zsh pcmanfm thunar lxappearance mirage file-roller udisks polkit gvfs gvfs-smb gvfs-mtp bash-completion udiskie chromium zip unrar tar autofs ntfs-3g thunar-archive-plugin thunar-volman pidgin curl git wget mplayer vlc lxappearance bc rsync mlocate bash-completion pkgstats ntfs-3g dosfstools exfat-utils fuse fuse-exfat openssh nfs-utils samba smbnetfs gamin rxvt-unicode pcmanfm gvfs scrot thunar tumbler leafpad epdfview nitrogen wicd wicd-gtk libmtp gvfs-mtp jdk7-openjdk icedtea-web-java7 htop chromium firefox transmission-gtk gst-plugins-base gst-plugins-base-libs gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav vlc xbmc libbluray libquicktime weechat imap libdvdread libdvdnav libdvdcss virtualbox firefox compton-git weeplugins-git nano-syntax-highlighting-git qtconfiguration zsh-syntax-highlighting android-sdk sublime-text  tlp rssh")
+			#fonts=("ttf-liberation ttf-freefont ttf-bitstream-vera ttf-dejavu tamsyn-font")
+			#themes=("faenza-icon-theme mediterraneannight-theme adwaita-x-dark-and-light-theme gtk-theme-hope zukitwo-themes gtk-theme-elementary mate-icon-theme-faenza gnome-theme-adwaita gtk-theme-numix-git")
 			apps=apps.split(' ')
-			print("\nslice:",apps)
+			#fonts=fonts.split(' ')
+			#themes=themes.split(' ')
+			print('Name Packages:', apps, '\n type:', tp)
+			#print('\n apps:', apps,'\n fonts:', fonts, '\n themes:', themes)
+			if tp == '0':	
+				for i in range(len(apps)):
+					c.execute('insert into apps (name) VALUES ("' + apps[i] + '")')
+					print(apps[i])	
+			elif tp == '1':
+				for i in range(len(apps)):
+					c.execute('insert into themes (name) VALUES ("' + apps[i] + '")')
+					print(apps[i])
+			elif tp == '2':
+				for i in range(len(apps)):
+					c.execute('insert into fonts (name) VALUES ("' + apps[i] + '")')
+					print(apps[i])
+			#c.execute('insert into fonts (name) VALUES ("' + fonts + '")')
+			#c.execute('insert into themes (name) VALUES ("' + themes + '")')
+			connection.commit()
+			connection.close()
+
+	def remove(self, apps, tp):
+			#connection = sqlite3.connect("example.db")
+			connection = sqlite3.connect("teste1.db")
+			c = connection.cursor()
+			#c.execute('create table Persons (id int, name text, city text)')
+			#c.execute('create table Applications (id integer primary key, name blob, service int, name_service text)')
+			#c.execute('insert into Persons VALUES (1, "smith", "dallas")')
+			print ("APPS a remover:", apps)
+			#c.execute('delete from Applications (name) where name=', p )
+			if tp == '0':	
+				c.execute("DELETE FROM apps WHERE name=?", (apps,))
+			elif tp == '1':
+				c.execute("DELETE FROM themes WHERE name=?", (apps,))
+			elif tp == '2':
+				c.execute("DELETE FROM fonts WHERE name=?", (apps,))
+			connection.commit()
+			connection.close()
+
+	def instalar(self, tp):
+			#tp=tp
+			print("sudo pacman -Syu --noconfirm ", tp)
+			if tp == '0':	
+				apps=database.read(self,'apps')
+			elif tp == '1':
+				apps=database.read(self,'themes')
+			elif tp == '2':
+				apps=database.read(self,'fonts')
+			elif tp == '3':
+				print("Manual install")
+			elif tp == '4':
+				apps=database.read(self,'apps')
+				themes=database.read(self,'themes')
+				fonts=database.read(self,'fonts')
+			
+			apps=apps.split(' ')
+			print("\nslice: ",apps)
 			apps_installed = os.popen("pacman -Q -q").readlines()
 			apps_installed = [x.replace('\n', '') for x in apps_installed]
 			install=set(apps).difference(apps_installed)
 			install=' '.join(install)
-			print("\ninstalar: ", install)
+			rsp=input("Fim")
+			print("\n instalar: ", install)
 			#os.system('sudo pacman -Syu --noconfirm ' + apps )
 
