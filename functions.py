@@ -282,12 +282,10 @@ class database():
 			elif tp == '2':
 				apps=database.read(self,'fonts')
 			elif tp == '3':
-				print("Manual install")
-			elif tp == '4':
-				apps=database.read(self,'apps')
+				apps1=database.read(self,'apps')
 				themes=database.read(self,'themes')
 				fonts=database.read(self,'fonts')
-			
+				apps=apps1+themes+fonts		
 			apps=apps.split(' ')
 			print("\nslice: ",apps)
 			apps_installed = os.popen("pacman -Q -q").readlines()

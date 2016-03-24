@@ -88,23 +88,28 @@ while ans:
 		input("Done chipset")
 	elif ans=="3":
 		print("\n APPS database sqlite3\n") 
-		rsp=input("Create , read , insert, remove, install(1,2,3,4,5)")
+		rsp=input("Create[Done],read [Done], insert[Done] ,remove[Done], install[Done](1,2,3,4,5)")
 		if rsp == "1":
 			db.create()
 		elif rsp == "2":
-			#op=input("Read From : \n 0:Apps \n 1:Themes \n 2:Fonts ")
-			db.read("fonts")
+			tp=input("Read From : \n 0:Apps \n 1:Themes \n 2:Fonts \n Opcao:")
+			if tp == '0':	
+				apps=db.read('apps')
+			elif tp == '1':
+				apps=db.read('themes')
+			elif tp == '2':
+				apps=db.read('fonts')
 		elif rsp == "3":
 			print("0")
-			tp=input("\n Add From \n 0:Apps \n 1:Themes \n 2:Fonts \n Type:")
+			tp=input("\n Add From [Done] \n 0:Apps \n 1:Themes \n 2:Fonts \n Type:")
 			apps=input("Name Packages: (package1 package2 etc)")
 			db.insert(apps, tp)
 		elif rsp == "4":
-			tp=input("\n Remove From \n 0:Apps \n 1:Themes \n 2:Fonts \n Type:")
+			tp=input("\n Remove From [Done] \n 0:Apps \n 1:Themes \n 2:Fonts \n Type:")
 			apps=input("Applicacoes a remover:")
 			db.remove(apps, tp)
 		elif rsp == "5":
-			tp=input("\n Install From \n 0:Apps \n 1:Themes \n 2:Fonts \n 3:Manual Install \n 4:Install All (Apps,Themes and Fonts) \n Applicacoes a instalar:")
+			tp=input("\n Install From \n 0:Apps [Done] \n 1:Themes [Done] \n 2:Fonts [Done] \n 3:Install All (Apps,Themes and Fonts) Done] \n Opcao:")
 			db.instalar(tp)
 		else:
 			pass
